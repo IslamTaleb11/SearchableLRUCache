@@ -1,0 +1,18 @@
+﻿# Visual Studio
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.vscode/
+*.ncb
+*.sdf
+*.opensdf
+*.VC.db
+
+# Rider / JetBrains
+.idea/
+
+# Others
+*.log
+*.tmp
