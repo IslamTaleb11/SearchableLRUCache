@@ -45,6 +45,7 @@
     <Compile Include="AVLTreeNode.cs" />
     <Compile Include="LRU.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchableLRUCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore.txt" />

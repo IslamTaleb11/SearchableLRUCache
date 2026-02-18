@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SearchableLRUCache
 {
-    public class AVLTree<T> where T : IComparable<T>
+    internal class AVLTree<T> where T : IComparable<T>
 
     {
         private AVLTreeNode<T> root;
@@ -50,16 +47,30 @@ namespace SearchableLRUCache
 
             if (balanceFactor < -1 && GetBalanceFactor(node.right) <= 0)
             {
-                return LeftBalance(node);
+                return LeftRotation(node);
             }
 
             if (balanceFactor > 1 && GetBalanceFactor(node.left) >= 0)
             {
-                return RightBalance(node);
+                return RightRotation(node);
             }
+
+            if (balanceFactor < -1 && GetBalanceFactor(node.right) > 0)
+            {
+                node.right = RightRotation(node.right);
+                return LeftRotation(node);
+            }
+
+            if ((balanceFactor > 1 && GetBalanceFactor(node.left) < 0))
+            {
+                node.left = LeftRotation(node.left);
+                return RightRotation(node);
+            }
+
+            return node;
         }
 
-        private AVLTreeNode<T> LeftBalance(AVLTreeNode<T> originalRoot)
+        private AVLTreeNode<T> LeftRotation(AVLTreeNode<T> originalRoot)
         {
             AVLTreeNode<T> newRoot = originalRoot.right;
             AVLTreeNode<T> originalLeftChild = newRoot.left;
@@ -73,7 +84,7 @@ namespace SearchableLRUCache
         }
 
 
-        private AVLTreeNode<T> RightBalance(AVLTreeNode<T> originalRoot)
+        private AVLTreeNode<T> RightRotation(AVLTreeNode<T> originalRoot)
         {
             AVLTreeNode<T> newRoot = originalRoot.left;
             AVLTreeNode<T> originalRightChild = newRoot.right;
@@ -95,6 +106,87 @@ namespace SearchableLRUCache
         private int Height(AVLTreeNode<T> node)
         {
             return node != null ? node.height : 0;
+        }
+
+        public void DeleteNode(T value)
+        {
+            root = DeleteNode(root, value);
+        }
+
+        private AVLTreeNode<T> DeleteNode(AVLTreeNode<T> node, T value)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+
+            if (value.CompareTo(node.value) < 0)
+            {
+                node.left = DeleteNode(node.left, value);
+            }
+            else if (value.CompareTo(node.value) > 0)
+            {
+                node.right = DeleteNode(node.right, value);
+            }
+            else
+            {
+                if (node.left == null)
+                {
+                    return node.right;
+                }
+                if (node.right == null)
+                {
+                    return node.left;
+                }
+
+                AVLTreeNode<T> minValueNode = GetMinValueNode(node.right);
+
+                node.value = minValueNode.value;
+                node.right = DeleteNode(node.right, minValueNode.value);
+            }
+
+            UpdateHeight(node);
+
+            return BalanceTree(node);
+        }
+
+
+        private AVLTreeNode<T> GetMinValueNode(AVLTreeNode<T> node)
+        {
+            AVLTreeNode<T> minNode = node;
+
+            while (minNode.left != null)
+            {
+                minNode = minNode.left;
+            }
+
+            return minNode;
+        }
+
+        public void PrintTree()
+        {
+            PrintTree(root, "", true);
+        }
+
+        private void PrintTree(AVLTreeNode<T> node, string indent, bool last)
+        {
+            if (node != null)
+            {
+                Console.Write(indent);
+                if (last)
+                {
+                    Console.Write("R----");
+                    indent += "     ";
+                }
+                else
+                {
+                    Console.Write("L----");
+                    indent += "|    ";
+                }
+                Console.WriteLine(node.value);
+                PrintTree(node.left, indent, false);
+                PrintTree(node.right, indent, true);
+            }
         }
     }
 }

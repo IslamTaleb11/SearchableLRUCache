@@ -1,0 +1,14 @@
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.db
+
+# Build output
+bin/
+obj/
+*.dll
+*.pdb
+
+# Ignore any temp files
+*.cache

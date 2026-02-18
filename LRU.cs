@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SearchableLRUCache
 {
-    public class LRU<TKey, TValue>
+    internal class LRU<TKey, TValue> where TKey : IComparable<TKey>
     {
         private int Capacity { set; get; }
         private Dictionary<TKey, TValue> cache;
         private LinkedList<TKey> linkedList;
         private Dictionary<TKey, LinkedListNode<TKey>> nodesList;
         private object lockObject;
+        private AVLTree<TKey> avlTree;
 
         public LRU(int capacity)
         {
@@ -22,6 +21,8 @@ namespace SearchableLRUCache
             nodesList = new Dictionary<TKey, LinkedListNode<TKey>>();
 
             lockObject = new Object();
+
+            avlTree = new AVLTree<TKey>();
         }
 
         private bool IsCacheFull()
@@ -44,7 +45,6 @@ namespace SearchableLRUCache
                 }
                 return default(TValue);
             }
-
         }
 
 
@@ -55,6 +55,7 @@ namespace SearchableLRUCache
                 cache.Add(Key, Value);
                 LinkedListNode<TKey> node = linkedList.AddFirst(Key);
                 nodesList.Add(Key, node);
+                avlTree.Insert(Key);
             }
         }
 
@@ -68,6 +69,7 @@ namespace SearchableLRUCache
                 linkedList.Remove(leastRecentlyUsedNode);
                 cache.Remove(leastRecentlyUsedNode.Value);
                 nodesList.Remove(leastRecentlyUsedNode.Value);
+                avlTree.DeleteNode(leastRecentlyUsedNode.Value);
             }
         }
 
@@ -162,6 +164,11 @@ namespace SearchableLRUCache
             {
                 Console.WriteLine(item);
             }
+        }
+
+        public void printSortedSearchableLRUCache()
+        {
+            avlTree.PrintTree();
         }
 
     }
