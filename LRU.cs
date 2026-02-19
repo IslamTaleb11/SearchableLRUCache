@@ -124,10 +124,9 @@ namespace SearchableLRUCache
 
         public bool DeleteKey(TKey Key)
         {
-            if (ContainsKey(Key))
-            {
-                lock (lockObject)
-                {
+            
+             lock (lockObject)
+             {
                     LinkedListNode<TKey> node = nodesList[Key];
                     linkedList.Remove(node);
 
@@ -135,8 +134,8 @@ namespace SearchableLRUCache
                     nodesList.Remove(Key);
 
                     return !ContainsKey(Key) ? true : false;
-                }
-            }
+             }
+            
             return false;
         }
 
@@ -148,7 +147,7 @@ namespace SearchableLRUCache
                 Dictionary<TKey, TValue> resultDictionary = new Dictionary<TKey, TValue>();
                 LinkedList<TKey> tempLinkedList = new LinkedList<TKey>(linkedList);
 
-                for (int i = 0; i < Capacity; i++)
+                for (int i = 0; i < cache.Count; i++)
                 {
                     TKey firstKey = (TKey)tempLinkedList.First.Value;
                     tempLinkedList.RemoveFirst();
@@ -156,6 +155,12 @@ namespace SearchableLRUCache
                 }
                 return resultDictionary;
             }
+        }
+
+        public List<TKey> SearchByPrefix(TKey Prefix, Dictionary<TKey, List<TKey>> cachedRecentQueries)
+        {
+            List<TKey> list = new List<TKey>(); 
+            return avlTree.AutoComplete(Prefix, list, cachedRecentQueries);
         }
 
         public void printCache()

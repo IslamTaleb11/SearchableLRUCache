@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace SearchableLRUCache
@@ -162,6 +163,38 @@ namespace SearchableLRUCache
 
             return minNode;
         }
+
+        public List<T> AutoComplete(T prefix, List<T> list, Dictionary<T, List<T>> cachedRecentQueries)
+        {
+            AutoComplete(root, prefix, list);
+            cachedRecentQueries.Add(prefix, list);
+            return list;
+        }
+
+        private void AutoComplete(AVLTreeNode<T> node, T prefix, List<T> list)
+        {
+            if (node != null)
+            {
+                if (node.value.ToString().StartsWith(prefix.ToString()))
+                {
+                    list.Add(node.value);
+                    AutoComplete(node.right, prefix, list);
+                    AutoComplete(node.left, prefix, list);
+                }
+                else
+                {
+                    if (string.Compare(prefix.ToString(), node.value.ToString(), StringComparison.OrdinalIgnoreCase) < 0)
+                    {
+                        AutoComplete(node.left, prefix, list);
+                    }
+                    else
+                    {
+                        AutoComplete(node.right, prefix, list);
+                    }
+                }
+            }
+        }
+ 
 
         public void PrintTree()
         {

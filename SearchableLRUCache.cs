@@ -7,15 +7,18 @@ namespace SearchableLRUCache
     public class SearchableLRUCache<TKey, TValue> where TKey : IComparable<TKey>
     {
         private LRU<TKey, TValue> lru { get; set; }
+        private Dictionary<TKey, List<TKey>> cachedRecentQueries;
 
         public SearchableLRUCache(int Capacity)
         {
             lru = new LRU<TKey, TValue>(Capacity);
+            cachedRecentQueries = new Dictionary<TKey, List<TKey>>();
         }
 
         public void Put(TKey Key, TValue Value)
         {
             lru.Put(Key, Value);
+            ClearCachedRecentQueries();
         }
         public TValue Get(TKey Key)
         {
@@ -34,7 +37,12 @@ namespace SearchableLRUCache
 
         public bool DeleteKey(TKey Key)
         {
-            return lru.DeleteKey(Key);
+            if (lru.ContainsKey(Key))
+            {
+                ClearCachedRecentQueries();
+                return lru.DeleteKey(Key);
+            }
+            return false;
         }
 
         public Dictionary<TKey, TValue> GetAllValuesAsc()
@@ -50,6 +58,20 @@ namespace SearchableLRUCache
         public void printSortedSearchableLRUCache()
         {
             lru.printSortedSearchableLRUCache();
+        }
+
+        public List<TKey> SearchByPrefix(TKey Prefix)
+        {
+            if (cachedRecentQueries.ContainsKey(Prefix))
+            {
+                return cachedRecentQueries[Prefix];
+            }
+            return lru.SearchByPrefix(Prefix, cachedRecentQueries);
+        }
+
+        private void ClearCachedRecentQueries()
+        {
+            cachedRecentQueries.Clear();
         }
     }
 }

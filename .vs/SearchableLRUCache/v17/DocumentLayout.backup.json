@@ -1,0 +1,104 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1D9D7E5E-B924-40BC-858F-2FA49363BF18}|..\\SearchableLRUCacheTesting\\SearchableLRUCacheTesting.csproj|c:\\users\\msi\\desktop\\searchablelrucachetesting\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4E77A361-873A-4577-BF16-8FAE93E6C5FC}|SearchableLRUCache.csproj|C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\searchablelrucache.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4E77A361-873A-4577-BF16-8FAE93E6C5FC}|SearchableLRUCache.csproj|solutionrelative:searchablelrucache.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4E77A361-873A-4577-BF16-8FAE93E6C5FC}|SearchableLRUCache.csproj|C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\lru.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4E77A361-873A-4577-BF16-8FAE93E6C5FC}|SearchableLRUCache.csproj|solutionrelative:lru.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4E77A361-873A-4577-BF16-8FAE93E6C5FC}|SearchableLRUCache.csproj|C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\avltree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4E77A361-873A-4577-BF16-8FAE93E6C5FC}|SearchableLRUCache.csproj|solutionrelative:avltree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4E77A361-873A-4577-BF16-8FAE93E6C5FC}|SearchableLRUCache.csproj|c:\\users\\msi\\desktop\\searchablelrucache\\avltreenode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4E77A361-873A-4577-BF16-8FAE93E6C5FC}|SearchableLRUCache.csproj|solutionrelative:avltreenode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AVLTreeNode.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\AVLTreeNode.cs",
+              "RelativeDocumentMoniker": "AVLTreeNode.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\AVLTreeNode.cs",
+              "RelativeToolTip": "AVLTreeNode.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-18T15:22:19.404Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SearchableLRUCache.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\SearchableLRUCache.cs",
+              "RelativeDocumentMoniker": "SearchableLRUCache.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\SearchableLRUCache.cs",
+              "RelativeToolTip": "SearchableLRUCache.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAuwEQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-18T13:46:55.249Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LRU.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\LRU.cs",
+              "RelativeDocumentMoniker": "LRU.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\LRU.cs",
+              "RelativeToolTip": "LRU.cs",
+              "ViewState": "AgIAAJEAAAAAAAAAAAAvwKMAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T23:22:28.717Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\SearchableLRUCacheTesting\\Program.cs",
+              "RelativeDocumentMoniker": "..\\SearchableLRUCacheTesting\\Program.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\SearchableLRUCacheTesting\\Program.cs*",
+              "RelativeToolTip": "..\\SearchableLRUCacheTesting\\Program.cs*",
+              "ViewState": "AgIAACsAAAAAAAAAAAAkwD0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-18T12:28:08.67Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AVLTree.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\AVLTree.cs",
+              "RelativeDocumentMoniker": "AVLTree.cs",
+              "ToolTip": "C:\\Users\\MSI\\Desktop\\SearchableLRUCache\\AVLTree.cs",
+              "RelativeToolTip": "AVLTree.cs",
+              "ViewState": "AgIAAJwAAAAAAAAAAAAYwKsAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T23:24:55.282Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
