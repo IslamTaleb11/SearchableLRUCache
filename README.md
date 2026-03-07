@@ -63,7 +63,28 @@ A high-performance, in-memory **searchable cache** implemented in C#, combining 
 
 - Remove a key from both LRU and AVL tree.
 - **Time Complexity:** **O(log n)** (AVL deletion) + **O(1)** (Dictionary + LinkedList removal)
+### 9️⃣ Expiration / Time-To-Live (TTL)
 
+- Each key-value pair can have an optional expiration time.
+
+- Automatically removed from cache once the expiration is reached.
+
+- Thread-safe background cleanup runs periodically to remove expired items.
+
+- Time Complexity:
+
+- Background cleanup: O(n) per cleanup cycle (n = number of cached items)
+
+- Ideal for session caches, temporary data storage, or time-sensitive information.
+```csharp
+// Insert with expiration
+cache.Put("meta.com", 15, DateTime.UtcNow.AddMinutes(3));
+
+// Access before expiration
+var value = cache.Get("meta.com"); // returns 15
+
+// After 3 minutes, the item is automatically removed
+```
 ---
 
 ## Installation
