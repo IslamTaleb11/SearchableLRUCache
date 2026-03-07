@@ -1,28 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Threading;
 
 namespace SearchableLRUCache
 {
     internal class LRU<TKey, TValue> where TKey : IComparable<TKey>
     {
+        private class CacheItem
+        {
+            public TValue value;
+            public DateTime expiration;
+        }
         private int Capacity { set; get; }
-        private Dictionary<TKey, TValue> cache;
+        private Dictionary<TKey, CacheItem> cache;
         private LinkedList<TKey> linkedList;
         private Dictionary<TKey, LinkedListNode<TKey>> nodesList;
         private object lockObject;
         private AVLTree<TKey> avlTree;
-
+        private CacheItem cacheItem;
+        private Timer cleanupTimer;
         public LRU(int capacity)
         {
             this.Capacity = capacity;
-            cache = new Dictionary<TKey, TValue>();
+            cache = new Dictionary<TKey, CacheItem>();
             linkedList = new LinkedList<TKey>();
             nodesList = new Dictionary<TKey, LinkedListNode<TKey>>();
 
             lockObject = new Object();
 
             avlTree = new AVLTree<TKey>();
+           
+
+        }
+
+        public int CountCache()
+        {
+            return cache.Count;
         }
 
         private bool IsCacheFull()
@@ -34,25 +48,28 @@ namespace SearchableLRUCache
         {
             lock (lockObject)
             {
-                if (cache.TryGetValue(Key, out TValue value))
+                if (cache.TryGetValue(Key, out CacheItem item))
                 {
 
                     LinkedListNode<TKey> node = nodesList[Key];
                     linkedList.Remove(node);
                     linkedList.AddFirst(node);
 
-                    return value;
+                    return item.value;
                 }
                 return default(TValue);
             }
         }
 
 
-        private void Insert(TKey Key, TValue Value)
+        private void Insert(TKey Key, TValue Value, DateTime? expiration = null)
         {
             lock (lockObject)
             {
-                cache.Add(Key, Value);
+                CacheItem cacheItem = new CacheItem();
+                cacheItem.value = Value;
+                cacheItem.expiration = expiration ?? DateTime.MaxValue;
+                cache.Add(Key, cacheItem);
                 LinkedListNode<TKey> node = linkedList.AddFirst(Key);
                 nodesList.Add(Key, node);
                 avlTree.Insert(Key);
@@ -77,7 +94,7 @@ namespace SearchableLRUCache
         {
             lock (lockObject)
             {
-                cache[Key] = Value;
+                cache[Key].value = Value;
                 LinkedListNode<TKey> node = nodesList[Key];
                 linkedList.Remove(node);
                 linkedList.AddFirst(node);
@@ -104,6 +121,47 @@ namespace SearchableLRUCache
             }
         }
 
+        public void Put(TKey Key, TValue Value, DateTime Expiration)
+        {
+            if (cache.ContainsKey(Key))
+            {
+                Override(Key, Value);
+            }
+            else
+            {
+                if (!IsCacheFull())
+                {
+                    Insert(Key, Value, Expiration);
+                }
+                else
+                {
+                    Remove();
+                    Insert(Key, Value, Expiration);
+                }
+            }
+        }
+
+
+        public void StartCleanupTimer()
+        {
+            cleanupTimer = new Timer(_ =>
+            {
+                lock (lockObject)
+                {
+                    var keysToDelete = cache.Where(kv => 
+                    kv.Value.expiration != DateTime.MaxValue && kv.Value.expiration < DateTime.UtcNow)
+                    .Select(kv => kv.Key)
+                    .ToList();
+
+                    foreach (var item in keysToDelete)
+                    {
+                        DeleteKey(item);
+                        avlTree.DeleteNode(item);
+                    }
+                }
+            }, null, TimeSpan.Zero, TimeSpan.FromSeconds(7)); // run every 7 seconds
+        }
+
 
         public bool ContainsKey(TKey Key)
         {
@@ -113,9 +171,9 @@ namespace SearchableLRUCache
 
         public TValue Peek(TKey Key)
         {
-            if (cache.TryGetValue(Key, out TValue Value))
+            if (cache.TryGetValue(Key, out CacheItem item))
             {
-                return Value;
+                return item.value;
             }
 
             return default(TValue);
@@ -151,7 +209,7 @@ namespace SearchableLRUCache
                 {
                     TKey firstKey = (TKey)tempLinkedList.First.Value;
                     tempLinkedList.RemoveFirst();
-                    resultDictionary.Add(firstKey, cache[firstKey]);
+                    resultDictionary.Add(firstKey, cache[firstKey].value);
                 }
                 return resultDictionary;
             }

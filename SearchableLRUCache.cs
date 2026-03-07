@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace SearchableLRUCache
 {
     public class SearchableLRUCache<TKey, TValue> where TKey : IComparable<TKey>
@@ -13,11 +12,24 @@ namespace SearchableLRUCache
         {
             lru = new LRU<TKey, TValue>(Capacity);
             cachedRecentQueries = new Dictionary<TKey, List<TKey>>();
+            StartCleanupTimer();
+        }
+
+
+        private void StartCleanupTimer()
+        {
+            lru.StartCleanupTimer();
         }
 
         public void Put(TKey Key, TValue Value)
         {
             lru.Put(Key, Value);
+            ClearCachedRecentQueries();
+        }
+
+        public void Put(TKey Key, TValue Value, DateTime expiration)
+        {
+            lru.Put(Key, Value, expiration);
             ClearCachedRecentQueries();
         }
         public TValue Get(TKey Key)
