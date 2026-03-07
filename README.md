@@ -71,7 +71,7 @@ A high-performance, in-memory **searchable cache** implemented in C#, combining 
 
 - Thread-safe background cleanup runs periodically to remove expired items.
 
-- Time Complexity:
+**Time Complexity:**
 
 - Background cleanup: O(n) per cleanup cycle (n = number of cached items)
 
